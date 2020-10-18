@@ -5,8 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-5">
                 <div class="card">
-                    <div class="card-header">{{ __('Заполните поля данными:') }}</div>
-
+                    <div class="card-header">{{ __('Редактировать:') }}</div>
                     <div class="card-body">
                         @if ($errors->any())
                             <div class="alert alert-danger">
@@ -18,24 +17,24 @@
                             </div>
                         @endif
 
-                        <form class="form-signin" action="{{ route('form.store') }}" method="POST">
+                        <form class="form-signin" action="{{ route('form.update', $data->id) }}" method="POST">
                             @csrf
+                            @method('PATCH')
 
                             <div class="form-group">
-                                <label for="inputEmail" class="sr-only">Email address</label>
-                                <input type="email" id="inputEmail" class="form-control" placeholder="Email address"
-                                    required="" name="email">
+                                <input type="text" id="inputEmail" class="form-control" name="email"
+                                    value="{{ $data->email }}">
                             </div>
 
                             <div class="form-group">
-                                <label for="inputText" class="sr-only">Text</label>
-                                <input type="text" id="inputText" class="form-control" placeholder="Text" required=""
-                                    name="text">
+                                <input type="text" id="inputText" class="form-control" name="text"
+                                    value="{{ $data->text }}">
                             </div>
 
                             <div class="form-group">
                                 <label for="comment">Comment:</label>
-                                <textarea class="form-control" rows="3" id="comment" name="message"></textarea>
+                                <textarea class="form-control" rows="3" id="comment"
+                                    name="message">{{ $data->message }}</textarea>
                             </div>
 
                             <div class="form-group">
@@ -80,18 +79,3 @@
         </div>
     </div>
 @endsection
-
-<script>
-    // const inputs = document.querySelectorAll('input[type=checkbox]');
-    const button = document.querySelector('button');
-
-    function check() {
-        button.disabled = false;
-        // inputs.forEach(input => {
-        //     if (input.checked) button.disabled = false
-        // });
-    }
-
-    // inputs.forEach(input => input.addEventListener('change', check));
-
-</script>

@@ -39,12 +39,20 @@ class FormController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'email' => 'required|max:255',
-            'text' => 'required',
+            'email' => 'required|max:20',
+            'text' => 'required|max:140',
             'message' => 'required|max:255',
             'select' => 'required',
-            'radio' => 'required|unique:posts|max:255',
+            'radio' => 'required',
         ]);
+
+        $data = new Form;
+        $data->email = $request->input('email');
+        $data->text = $request->input('text');
+        $data->message = $request->input('message');
+        $data->select = $request->input('select');
+        $data->radio = $request->input('radio');
+        $data->save();
 
         return back()->withInput();
     }
@@ -57,7 +65,12 @@ class FormController extends Controller
      */
     public function show(Form $form)
     {
-        //
+
+        // return view('form/show_data', [
+        //     'data' => Form::where('id', $form->id)->first()
+        // ]);
+        // $data = Form::where('id', $form->id)->first();
+        // return $data;
     }
 
     /**
@@ -68,7 +81,9 @@ class FormController extends Controller
      */
     public function edit(Form $form)
     {
-        //
+        return view('form/edit_data', [
+            'data' => Form::where('id', $form->id)->first()
+        ]);
     }
 
     /**
@@ -80,7 +95,15 @@ class FormController extends Controller
      */
     public function update(Request $request, Form $form)
     {
-        //
+        $data = Form::where('id', $form->id)->first();
+        $data->email = $request->input('email');
+        $data->text = $request->input('text');
+        $data->message = $request->input('message');
+        $data->select = $request->input('select');
+        $data->radio = $request->input('radio');
+        $data->save();
+
+        return redirect('/form');
     }
 
     /**
