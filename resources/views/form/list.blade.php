@@ -13,14 +13,21 @@
                                 <a href="{{ route('form.edit', $item->id) }}"
                                     class="list-group-item list-group-item-action flex-column align-items-start">
                                     <div class="d-flex w-100 justify-content-between">
-                                        <h5 class="mb-1">{{ $item->text }}</h5>
+                                        <h5 class="mb-1">{{ $item->heading }}</h5>
                                         <small>Создано {{ $item->created_at }}</small>
                                     </div>
                                     <p class="mb-1">{{ $item->message }}</p>
-                                    <p class="mb-1">{{ $item->select }}</p>
-                                    <p class="mb-1">{{ $item->radio }}</p>
+                                    <p class="mb-1">{{ $item->durations_id }}</p>
+                                    <p class="mb-1">{{ $item->gender }}</p>
                                     <small>{{ $item->email }}</small>
                                 </a>
+                                <form action="{{ route('form.destroy', $item->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button class="btn btn-lg btn-primary btn-block" type="submit"
+                                        name="delete">Удалить</button>
+                                </form>
                             @empty
                                 <p>Тут пока ничего нет</p>
                             @endforelse

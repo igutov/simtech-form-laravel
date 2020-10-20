@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Form;
+use App\Models\Duration;
+use App\Mail\DataForm;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class FormController extends Controller
 {
@@ -14,7 +17,6 @@ class FormController extends Controller
      */
     public function index()
     {
-        // return Form::all();
         return view('form/list', [
             'data' => Form::all()
         ]);
@@ -27,7 +29,9 @@ class FormController extends Controller
      */
     public function create()
     {
-        return view('form/form_create');
+        return view('form/form_create', [
+            'duration' => Duration::all()
+        ]);
     }
 
     /**
@@ -39,20 +43,20 @@ class FormController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'email' => 'required|max:20',
-            'text' => 'required|max:140',
+            'email' => 'required|email',
+            'heading' => 'required|max:140',
             'message' => 'required|max:255',
-            'select' => 'required',
-            'radio' => 'required',
         ]);
 
         $data = new Form;
         $data->email = $request->input('email');
-        $data->text = $request->input('text');
+        $data->heading = $request->input('heading');
         $data->message = $request->input('message');
-        $data->select = $request->input('select');
-        $data->radio = $request->input('radio');
+        $data->gender = $request->input('gender');
+        $data->durations_id = $request->input('duration');
         $data->save();
+
+        Mail::to($data->email)->send(new DataForm($data));
 
         return back()->withInput();
     }
@@ -65,12 +69,7 @@ class FormController extends Controller
      */
     public function show(Form $form)
     {
-
-        // return view('form/show_data', [
-        //     'data' => Form::where('id', $form->id)->first()
-        // ]);
-        // $data = Form::where('id', $form->id)->first();
-        // return $data;
+        //
     }
 
     /**
@@ -114,6 +113,9 @@ class FormController extends Controller
      */
     public function destroy(Form $form)
     {
-        //
+        $data = Form::where('id', $form->id)->first();
+        $data->delete();
+
+        return back()->withInput();
     }
 }

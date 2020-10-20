@@ -34,9 +34,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/form/create') }}">Форма создания записи</a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="{{ url('/form') }}">Редактирование или удаление записи</a>
-                </li>
+                </li> --}}
                 {{-- <li class="nav-item">
                     <a class="nav-link" href="{{ url('/form/create') }}"></a>
                 </li> --}}

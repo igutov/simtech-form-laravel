@@ -16,10 +16,12 @@ class CreateFormsTable extends Migration
         Schema::create('forms', function (Blueprint $table) {
             $table->id();
             $table->string('email');
-            $table->string('text');
+            $table->string('heading');
             $table->string('message');
-            $table->integer('select');
-            $table->integer('radio');
+            // $table->integer('durations_id')->unsigned()->default(1);
+            // $table->foreign('durations_id')->references('id')->on('durations');
+            $table->string('gender');
+            $table->string('file');
             $table->timestamps();
         });
     }
