@@ -8,6 +8,7 @@
                     <div class="card-header">{{ __('Список:') }}</div>
 
                     <div class="card-body">
+                        {{ $data->links('pagination::bootstrap-4') }}
                         <div class="list-group">
                             @forelse ($data as $item)
                                 <a href="{{ route('form.edit', $item->id) }}"
@@ -31,6 +32,7 @@
                             @empty
                                 <p>Тут пока ничего нет</p>
                             @endforelse
+
                         </div>
                     </div>
                 </div>

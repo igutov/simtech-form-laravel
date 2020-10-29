@@ -17,8 +17,10 @@ class FormController extends Controller
      */
     public function index()
     {
+        $data = Form::paginate(3);
+
         return view('form/list', [
-            'data' => Form::all()
+            'data' => $data
         ]);
     }
 
@@ -56,7 +58,7 @@ class FormController extends Controller
         $data->durations_id = $request->input('duration');
         $data->save();
 
-        Mail::to($data->email)->send(new DataForm($data));
+        // Mail::to($data->email)->send(new DataForm($data));
 
         return back()->withInput();
     }
